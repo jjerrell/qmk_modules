@@ -15,8 +15,8 @@ ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(0, 1, 0);
  */
 bool process_record_shifted_mod_tap(uint16_t keycode, keyrecord_t *record) {
     if (IS_QK_MOD_TAP(keycode) && record->tap.count) {
-        keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
-        switch (keycode) {
+        uint16_t unwrapped_keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
+        switch (unwrapped_keycode) {
             case KC_TILDE:
             case KC_EXCLAIM:
             case KC_AT:
@@ -39,7 +39,8 @@ bool process_record_shifted_mod_tap(uint16_t keycode, keyrecord_t *record) {
             case KC_RIGHT_ANGLE_BRACKET:
             case KC_QUESTION:
                 // Check tap.count to make sure we aren't processing a modifier
-                tap_code16(keycode);
+                tap_code16(unwrapped_keycode);
+                return false;
                 // if (record->event.pressed) {
                 //     // Apply shift
                 //     register_code(KC_LSFT);
