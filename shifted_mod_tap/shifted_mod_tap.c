@@ -96,29 +96,29 @@ bool process_record_shifted_mod_tap(uint16_t keycode, keyrecord_t *record) {
 
 // Current, functional version
     switch (keycode) {
-            case CTL_T(KC_HASH):
-            case CTL_T(KC_CIRC):
-            case ALT_T(KC_RPRN):
-            case ALT_T(KC_LCBR):
-            case ALT_T(KC_RCBR):
-            case GUI_T(KC_RCBR):
-            case GUI_T(KC_LPRN):
-            case GUI_T(KC_RPRN):
-            case SFT_T(KC_RABK):
-            case CTL_T(KC_QUES):
-                // Check tap.count to make sure we aren't processing a modifier
-                if (record->tap.count && record->event.pressed) {
-                    // Apply shift
-                    register_code(KC_LSFT);
-                    // Using tap_code16 we can send the uint16_t keycode parameter
-                    tap_code16(keycode);
-                    // Release shift
-                    unregister_code(KC_LSFT);
-                    // stop processing this keycode or the firmware will send the unshifted keycode also
-                    return false;
-                }
-                // Modifier processing or not enough time elapsed to determine if it's a tap
-                break;
-        }
+        case CTL_T(KC_HASH):
+        case CTL_T(KC_CIRC):
+        case ALT_T(KC_RPRN):
+        case ALT_T(KC_LCBR):
+        case ALT_T(KC_RCBR):
+        case GUI_T(KC_RCBR):
+        case GUI_T(KC_LPRN):
+        case GUI_T(KC_RPRN):
+        case SFT_T(KC_RABK):
+        case CTL_T(KC_QUES):
+            // Check tap.count to make sure we aren't processing a modifier
+            if (record->tap.count && record->event.pressed) {
+                // Apply shift
+                register_code(KC_LSFT);
+                // Using tap_code16 we can send the uint16_t keycode parameter
+                tap_code16(keycode);
+                // Release shift
+                unregister_code(KC_LSFT);
+                // stop processing this keycode or the firmware will send the unshifted keycode also
+                return false;
+            }
+            // Modifier processing or not enough time elapsed to determine if it's a tap
+            break;
+    }
     return true;
 }
